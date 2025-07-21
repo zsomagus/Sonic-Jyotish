@@ -1,0 +1,51 @@
+sonicjyotish/
+├── __init__.py						?   
+|--manage.py	
+|--viewss.py	
+|--wsgi.py	
+|--README.md
+|--requirements.txt
+├── views/
+│   ├── views_astro.py               # Rashi, Prashna, Varshaphala nézetek
+├── utils/
+│   ├── chart_calc.py           # Planetáris pozíciók, ASC, ayanamsa
+│   ├── tithi_nakshatra.py      # Tithi, nakshatra számítások
+│   ├── prashna.py              # Prashna képlet generálása
+│   ├── varshaphala.py          # Varshaphala számítás életkor alapján
+│   ├── drawer.py               # Horoszkópkép rajzolása matplotlibpel
+│   ├── yantra.py               # Tithi alapjn yantra kép keresése
+│   ├── _config.py				# static/ mappában lévő importok 
+│   ├── _coordinates.py			# koordináták feldolgozása
+│   ├── _data.py				# JSON mentés, betöltés
+│   ├── _gui.py					# gui
+│   ├── _learn.py				# tanulás
+│   ├── _location_utils.py		# koordináták kezelése  
+│   ├── _time_utils.py			# idő kezelése
+│   ├── audio_kotta_tools.py	# hang kezelés
+│   └── confiig.py				# térképek, táblázatok
+├── templates/
+│   ├──base.html
+│   ├──index.html
+|---ephe/
+|---mentett adatok/
+|---static/
+|---|_spacesonic/				# mantrák, hangok
+|---|_yantra/					# yantrák képek
+|---|---file1.xlsx				# koordináta
+|---|---file2.xlsx				# koordináta
+|---|---asztrológiai_adatbázis.xlsx	#adatbázis
+|---|---graha_ttranzit.xlsx			#jegy, bolygó, hang, hz
+|---|---kulcsszo_valaszok.xlsx		#kulcsszo, válasz,, mantra
+|---|---nakshatra_info.xlsx			#nakshatra, tulajdonság, ur, mantra, hz
+|---|---tithi_ajánlások.xlsx		 #titik,  tanácsok
+|---|---bolygo_nakshatra_map.xlsx
+|---|---house_position.xlsx
+|---|---jegy_uralkdok.xlsx
+|---|---mantra_map.xlsx
+|---|---nakshatra_frekvencia.xlsx
+|---|---nakshatras.xlsx
+|---|---planet_abbreviations.xlsx
+|---|---planet_ids.xlsx
+|---|---purusharta_map.xlsx
+|---|---varga_factors.xlsx
+|---|___mentett_adatok.json
