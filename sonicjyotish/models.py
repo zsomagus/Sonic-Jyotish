@@ -1,3 +1,6 @@
+from django.db import models
+
+
 class Elemzes(models.Model):
     vezetek_nev = models.CharField(max_length=50)
     kereszt_nev = models.CharField(max_length=50)

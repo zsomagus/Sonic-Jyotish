@@ -1,3 +1,6 @@
+from .models import Elemzes
+
+
 def index_view(request):
     if request.method == "POST":
         # 1️⃣ Ha pontszám-értékeléses POST
