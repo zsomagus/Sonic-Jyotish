@@ -4,8 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-ALLOWED_HOSTS = ['sonic-jyotish.onrender.com', '127.0.0.1', 'localhost']
-
+ALLOWED_HOSTS = ['sonicjyotish.onrender.com', '127.0.0.1', 'localhost']
+DEBUG = True
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = "/static/"
@@ -13,6 +13,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Production esetén:
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # Ha Whitenoise-t használsz (Renderen: igen)
 MIDDLEWARE = [
