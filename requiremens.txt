@@ -1,0 +1,17 @@
+librosa
+sounddevice
+soundfile
+pyttsx3
+Pillow
+matplotlib
+swisseph
+pandas
+pytz
+openpyxl
+gunicorn
+whitenoise
+dj-database-url
+psycopg2-binary
+numpy
+Django>=4.2
+djangorestframework
