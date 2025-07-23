@@ -1,6 +1,6 @@
 import pandas  as pd
 from pathlib import Path
-
+ADATMAPPA = Path(__file__).resolve().parent.parent / "static"
 sheets["asztrologiai_adatbazis"] = pd.read_excel(ADATMAPPA / "asztrológiai_adatbázis.xlsx", sheets_name=None)
 
 
@@ -115,7 +115,10 @@ def get_nakshatra_pada_info(nakshatra):
     sor = df[df["Nakshatra"].str.lower() == nakshatra.lower()]
     if not sor.empty:
         return {
+            "ura": ["ura"].values[0],
             "tulajdonsagok": sor["Tulajdonságok"].values[0],
+            "mantra": sor["mantra"].values[0],
+            "frekvencia": sor["frekvencia"].values[0],
             "pada_1": sor["1. Páda (Dharma)"].values[0],
             "pada_2": sor["2. Páda (Artha)"].values[0],
             "pada_3": sor["3. Páda (Kama)"].values[0],

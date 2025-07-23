@@ -2,6 +2,12 @@ import os
 from pathlib import Path
 from django.conf import settings
 from django.conf.urls.static import static
+import dj_database_url
+
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+}
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ALLOWED_HOSTS = ['sonicjyotish.onrender.com', '127.0.0.1', 'localhost']
@@ -13,7 +19,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Production esetén:
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", "!#582am_6hyb$7m$^yisa2cc!7-h(4rv#^_#^(l)j52m1^x+$d")
 
 # Ha Whitenoise-t használsz (Renderen: igen)
 MIDDLEWARE = [
