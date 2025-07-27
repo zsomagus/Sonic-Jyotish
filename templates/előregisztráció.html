@@ -43,9 +43,9 @@
       <source src="{% static 'videos/kapu.mp4' %}" type="video/mp4">
 	  Böngésződ nem támogatja a videót
     </video>
-	    <p><a href="{% url 'regisztracio_view' %}">→ Tovább a regisztrációhoz</a></p>
+	    <p><a href="{% url 'regisztracio' %}">→ Tovább a regisztrációhoz</a></p>
 
   {% else %}
-    <p style="color:red">⛔ Még nem éred el a szükséges szintet... próbáld újra később!</p>
+    <p style="color:red">⛔ Még nem éred el a szükséges szintet... próbáld újra később! Látogassa meg weboldalam: https://zsomagus.wordpress.com</p>
   {% endif %}
 {% endif %}
