@@ -7,7 +7,7 @@ from django.urls import path
 from .views import index_view
 from django.conf import settings
 from django.conf.urls.static import static
-
+from . import views
 urlpatterns = [
     path('', index_view, name='index'),  # kezdőoldal űrlappal
 ]
@@ -20,10 +20,13 @@ urlpatterns = [
 path('', include('asztroapp.urls')),
 
 
+
+
 urlpatterns = [
-    path('', index_view, name='index'),
+    path("", views.index, name="index"),
+    path("regisztracio/", views.regisztracio_view, name="regisztracio_view"),
 ]
-path("regisztracio/", regisztracio_view, name="regisztracio"),
+
 generate_horoszkop_for_user(user)  # Te írod meg, és hozzárendeli a képet
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
