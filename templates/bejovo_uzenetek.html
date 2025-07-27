@@ -1,0 +1,11 @@
+<h2>📥 Beérkezett üzenetek</h2>
+<ul>
+  {% for uzenet in uzenetek %}
+    <li>
+      <strong>{{ uzenet.kuldo.username }}</strong> írta {{ uzenet.letrehozva|date:"Y.m.d H:i" }}-kor:
+      <p>{{ uzenet.szoveg|linebreaks }}</p>
+    </li>
+  {% empty %}
+    <li>Nincs beérkezett üzenet.</li>
+  {% endfor %}
+</ul>

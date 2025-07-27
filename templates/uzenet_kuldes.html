@@ -1,0 +1,13 @@
+<h2>Üzenet küldése</h2>
+<form method="post">
+  {% csrf_token %}
+  <label>Címzett:</label><br>
+  <select name="cimzett_id">
+    {% for user in felhasznalok %}
+      <option value="{{ user.id }}">{{ user.username }}</option>
+    {% endfor %}
+  </select><br><br>
+  <label>Üzenet:</label><br>
+  <textarea name="szoveg"></textarea><br><br>
+  <button type="submit">Küldés</button>
+</form>

@@ -1,0 +1,51 @@
+{% load static %}
+
+<h2>Előregisztrációs Kérdőív</h2>
+<form method="post">
+  {% csrf_token %}
+
+  <p><strong>1. Az élet mely területe mozgat?</strong></p>
+  <label><input type="radio" name="q1" value="3"> Erkölcs</label><br>
+  <label><input type="radio" name="q1" value="1"> Anyagi világ, vágyak</label><br>
+  <label><input type="radio" name="q1" value="2"> Kapcsolódás másokkal</label><br>
+  <label><input type="radio" name="q1" value="6"> Spirituális élet</label><br>
+
+  <p><strong>2. Mi érdekel a közösségünkkel kapcsolatban?</strong></p>
+  <label><input type="radio" name="q2" value="1"> Csillagmegfigyelés</label><br>
+  <label><input type="radio" name="q2" value="2"> Kapcsolódás másokkal</label><br>
+  <label><input type="radio" name="q2" value="3"> Asztrológia</label><br>
+  <label><input type="radio" name="q2" value="4"> Spirituális fejlődés</label><br>
+
+  <p><strong>3. Tudod-e, mik a csakrák?</strong></p>
+  <label><input type="radio" name="q3" value="4"> Energia központok testünkben</label><br>
+  <label><input type="radio" name="q3" value="3"> Energia központok</label><br>
+  <label><input type="radio" name="q3" value="1"> Légzéssel függ össze</label><br>
+
+  <p><strong>4. Mi a prána?</strong></p>
+  <label><input type="radio" name="q4" value="4"> Szanszkritül légzés</label><br>
+  <label><input type="radio" name="q4" value="1"> Azon szoktam aludni</label><br>
+
+  <p><strong>5. Mi a lélek?</strong></p>
+  <label><input type="radio" name="q5" value="5"> Létünk esszenciája. Gondolataink, Elménk, Tudatunk lakhelye. A lélek nem felejt. Előző  életeink emlékeit sem.</label><br>
+  <label><input type="radio" name="q5" value="1"> A lélek halálunk után teremtődik.</label><br>
+  <label><input type="radio" name="q5" value="2"> Lelkünk a részünk.</label><br>
+
+
+  <br><button type="submit">Tovább</button>
+</form>
+
+{% if pontszam is not None %}
+  <hr>
+  <h3>Összpontszám: {{ pontszam }}</h3>
+  {% if pontszam >= 15 %}
+    <p style="color:green">✅ Beléphetsz az Ébredés közösségi oldalra!</p>
+    <video autoplay muted playsinline width="500">
+      <source src="{% static 'videos/kapu.mp4' %}" type="video/mp4">
+	  Böngésződ nem támogatja a videót
+    </video>
+	    <p><a href="{% url 'regisztracio_view' %}">→ Tovább a regisztrációhoz</a></p>
+
+  {% else %}
+    <p style="color:red">⛔ Még nem éred el a szükséges szintet... próbáld újra később!</p>
+  {% endif %}
+{% endif %}

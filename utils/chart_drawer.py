@@ -1,15 +1,13 @@
-import _coordinates
 import _location_utils
 import matplotlib.pyplot as plt
 import pytz
 from pytz import all_timezones
 import re
-from config import varga_factor, nakshatras
+import config
 import swisseph as swe
-from datetime import datetime, timedelta
-import pytz
-from pytz import all_timezones
-
+from datetime import datetime, timedeltam
+import astro_chart,  varsapala_tools, prashna_tools
+import _gui
 
 def rajzol_del_indiai_horoszkop(planet_positions, tithi, horoszkop_nev="D1"):
     fig, ax = plt.subplots(figsize=(6, 6))

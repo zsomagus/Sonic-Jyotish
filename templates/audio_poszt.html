@@ -1,0 +1,7 @@
+<h2>🎙️ Hangalapú poszt létrehozása</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" name="audio" accept="audio/*">
+  <button type="submit">Feltöltés</button>
+</form>
+

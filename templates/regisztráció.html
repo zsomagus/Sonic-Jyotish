@@ -1,0 +1,24 @@
+<h2>Regisztráció</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <label for="nev">Teljes név:</label><br>
+  {{ form.nev }}<br><br>
+
+  <label for="szuletesi_datum">Születési dátum:</label><br>
+  {{ form.szuletesi_datum }}<br><br>
+
+  <label for="szuletesi_ido">Születési idő (óra:perc):</label><br>
+  {{ form.szuletesi_ido }}<br><br>
+
+  <label for="szuletesi_hely">Születési hely:</label><br>
+  {{ form.szuletesi_hely }}<br><br>
+
+  <label for="bemutatkozas">Rövid bemutatkozás:</label><br>
+  {{ form.bemutatkozas }}<br><br>
+
+  <label for="fenykep">Fénykép feltöltése:</label><br>
+  {{ form.fenykep }}<br><br>
+
+  <button type="submit">Regisztrálok</button>
+</form>

@@ -1,12 +1,12 @@
 import librosa
 import soundevice as sd
 import soundfile as sf
-import _config
+import _config, config
 from matplotlib.backends.backend_pdf import PdfPages
 import numpy as np
 from config import full_pada_table, jegy_uralkodok, mantra_map, nakshatras, bolygo_nakshatra_map
-import astro_utils
-
+import astro_utils, prashna_tools, varsapala_tools
+import postgtresql
 MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     ...

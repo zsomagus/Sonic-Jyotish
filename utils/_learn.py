@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from _config import full_pada_table, jegy_uralkodok, mantra_map, nakshatras, bolygo_nakshatra_map
 from _config import varga_factor, nakshatras
-
+import astro_chart, audio_kotta_tools
 # 📆 Adatgyűjtő modul: bolygó + nakshatra + pada + jegy + ház → hangfrekvencia mentése Excelbe
 def export_to_excel(planet_positions, filename="hang_adatok.xlsx"):
     import pandas as pd

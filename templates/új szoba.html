@@ -1,0 +1,9 @@
+<h2>Új szoba létrehozása</h2>
+<form method="post">
+  {% csrf_token %}
+  <label>Név:</label><br>
+  <input type="text" name="nev"><br><br>
+  <label>Leírás:</label><br>
+  <textarea name="leiras"></textarea><br><br>
+  <button type="submit">Szoba létrehozása</button>
+</form>

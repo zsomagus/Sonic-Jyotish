@@ -1,0 +1,25 @@
+<h2>🔍 Közösségi tér – érdeklődési kör szerint</h2>
+<h1>Közösségi szobák</h1>
+<ul>
+  {% for szoba in szobak %}
+    <li>{{ szoba.nev }} – {{ szoba.leiras }}</li>
+  {% endfor %}
+</ul>
+
+<form method="get">
+  <input type="text" name="keres" placeholder="Pl. védikus, mantra, reiki" value="{{ keres }}">
+  <button type="submit">Keresés</button>
+</form>
+
+{% for profil in profilok %}
+  <div style="margin: 1em 0; padding: 1em; border-left: 4px solid #ccc;">
+    <h3>{{ profil.user.username }}</h3>
+    {% if profil.horoszkop_kep %}
+      <img src="{{ profil.horoszkop_kep.url }}" style="max-width: 150px;" alt="horoszkóp">
+    {% endif %}
+    <p><strong>Érdeklődési kör:</strong> {{ profil.erdeklodes }}</p>
+    <p>{{ profil.bemutatkozas|linebreaks }}</p>
+  </div>
+{% empty %}
+  <p>Nincs találat ezzel az érdeklődéssel.</p>
+{% endfor %}

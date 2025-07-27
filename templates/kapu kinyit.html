@@ -1,0 +1,12 @@
+<h2>A kapu megnyílik számodra…</h2>
+<video autoplay muted playsinline>
+    <source src="{% static 'videos/kapu.mp4' %}" type="video/mp4">
+    Böngésződ nem támogatja a videó lejátszást.
+</video>
+<a href="{% url 'regisztracio_view' %}">→ Tovább a regisztrációhoz</a>
+<script>
+  // 5másodperc után automatikusan átirányít a regisztrációra
+  setTimeout(function() {
+    window.location.href = "{% url 'regisztracio_view' %}";
+  }, 5000);
+</script>

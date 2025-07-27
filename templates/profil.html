@@ -1,0 +1,13 @@
+<h2>{{ user.username }} profilja</h2>
+<p>Születési dátum: {{ profil.szuletesi_datum }}</p>
+
+{% if profil.horoszkop_kep %}
+  <a href="{{ profil.horoszkop_kep.url }}" target="_blank">
+    <img src="{{ profil.horoszkop_kep.url }}" alt="Horoszkóp képe" style="max-width: 200px;">
+  </a>
+{% else %}
+  <p>Nincs még horoszkóp feltöltve.</p>
+{% endif %}
+
+<p><strong>Bemutatkozás:</strong><br>{{ profil.bemutatkozas|linebreaks }}</p>
+<p><strong>Érdeklődési kör:</strong> {{ profil.erdeklodes }}</p>

@@ -1,0 +1,13 @@
+<h2>✨ Közösségi szobák</h2>
+<a href="{% url 'uj_szoba' %}">➕ Új szoba létrehozása</a>
+
+<ul>
+  {% for szoba in szobak %}
+    <li>
+      <a href="{% url 'szoba_reszletei' szoba.id %}"><strong>{{ szoba.nev }}</strong></a> —
+      {{ szoba.leiras|truncatewords:10 }}
+    </li>
+  {% empty %}
+    <li>Még nincsenek szobák.</li>
+  {% endfor %}
+</ul>

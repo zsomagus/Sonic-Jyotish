@@ -1,0 +1,7 @@
+<h2>Profil szerkesztése</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Mentés</button>
+</form>
+<a href="{% url 'profil_pdf' %}" class="button" target="_blank">⬇ PDF letöltése a képletről</a>

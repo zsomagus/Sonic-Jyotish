@@ -1,0 +1,51 @@
+<h2>🕰️ Kozmikus idővonal</h2>
+
+{% for poszt in posztok %}
+  <div style="margin: 1em 0; padding: 1em; border-left: 3px solid #ccc;">
+    <p><strong>{{ poszt.szerzo.username }}</strong>
+       {% if poszt.szoba %} a <em>{{ poszt.szoba.nev }}</em> szobában{% endif %},
+       {{ poszt.letrehozva|date:"Y.m.d H:i" }}</p>
+
+    {% if poszt.hold_nakshatra %}
+      <p>🌙 Hold: <strong>{{ poszt.hold_nakshatra }}</strong></p>
+    {% endif %}
+
+    {% if poszt.tithi_szam %}
+      <p>🧘 Tithi: <strong>{{ poszt.tithi_szam }}</strong></p>
+    {% endif %}
+
+    <p>{{ poszt.szoveg|linebreaks }}</p>
+
+    {% if poszt.kep %}
+      <img src="{{ poszt.kep.url }}" style="max-width: 250px;">
+    {% endif %}
+
+    {% if poszt.yantra_kep %}
+      <h4>🔱 Tithi Yantra</h4>
+      <img src="{{ poszt.yantra_kep.url }}" style="max-width: 150px;">
+    {% endif %}
+
+    {% if poszt.audio %}
+      <h4>🎧 Hanganyag</h4>
+      <audio controls>
+        <source src="{{ poszt.audio.url }}" type="audio/wav">
+      </audio>
+    {% endif %}
+
+    {% if poszt.pdf %}
+      <h4>📎 PDF</h4>
+      <iframe src="{{ poszt.pdf.url }}" width="100%" height="300px"></iframe>
+      <a href="{{ poszt.pdf.url }}" download>⬇ Letöltés</a>
+    {% endif %}
+  </div>
+{% empty %}
+  <p>Még nincs poszt az idővonalon… 🕊️</p>
+  {% if poszt.szoveg %}
+  <p><strong>🎧 Felismert szöveg:</strong> {{ poszt.szoveg }}</p>
+{% endif %}
+
+{% if poszt.ai_valasz %}
+  <p><strong>🤖 AstroAI értelmezés:</strong> {{ poszt.ai_valasz }}</p>
+{% endif %}
+
+{% endfor %}

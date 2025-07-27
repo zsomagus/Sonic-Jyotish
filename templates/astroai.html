@@ -1,0 +1,20 @@
+<h2>🤖 AstroAI – Spirituális segítő</h2>
+<form method="post">
+  {% csrf_token %}
+  <input type="text" name="kerdes" placeholder="Pl. Milyen mantra jó ma?" style="width: 100%;">
+  <button type="submit">Kérdezek</button>
+</form>
+
+{% if kerdes %}
+  <h3>Kérdésed:</h3>
+  <p>{{ kerdes }}</p>
+  <h3>Válasz:</h3>
+  <p>{{ valasz }}</p>
+  <a href="{% url 'astroai_pdf' %}?kulcsszo=Punarvasu" class="button" target="_blank">
+  📄 PDF letöltése a(z) Punarvasu értelmezésről
+</a>
+<a href="{% url 'astroai_teljes_pdf' %}?kulcsszo=Punarvasu" class="button" target="_blank">
+  📥 Teljes AstroAI PDF letöltése (Elemzés + Purusharta)
+</a>
+
+{% endif %}

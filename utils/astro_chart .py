@@ -5,8 +5,7 @@ from PIL import Image
 import pytz
 from pytz import all_timezones
 import re
-from config import varga_factor, nakshatras
-import _config
+import _config, config
 from .nakshatra_lista import nakshatras  # ha nincs még, lent adom
 import speech_recognition as sr
 from .models import Poszt
@@ -15,6 +14,7 @@ from .ai_utils import valasz_adas       # itt hívod az OpenAI-t
 import audio_kotta_tools
 import postgresql
 import chart_drawer
+import _time_utils
 
 MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",

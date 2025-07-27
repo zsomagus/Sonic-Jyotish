@@ -1,0 +1,42 @@
+<h2>📝 Új poszt létrehozása</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Közzététel</button>
+</form>
+
+<hr>
+
+<h2>🕰️ Legutóbbi bejegyzések</h2>
+{% for poszt in posztok %}
+  <div style="margin: 1em 0; padding: 1em; border-left: 4px solid #ccc;">
+    <p><strong>{{ poszt.szerzo.username }}</strong> – {{ poszt.letrehozva|date:"Y. M. d. H:i" }}</p>
+    <p>{{ poszt.szoveg|linebreaks }}</p>
+
+    {% if poszt.kep %}
+      <img src="{{ poszt.kep.url }}" style="max-width: 200px;">
+    {% endif %}
+
+    {% if poszt.audio %}
+      <audio controls>
+        <source src="{{ poszt.audio.url }}" type="audio/wav">
+      </audio>
+      <br>
+      <a href="{{ poszt.audio.url }}" download>⬇ Hang letöltése</a>
+    {% endif %}
+
+    {% if poszt.pdf %}
+      <iframe src="{{ poszt.pdf.url }}" width="100%" height="300px"></iframe>
+      <a href="{{ poszt.pdf.url }}" download>⬇ PDF letöltése</a>
+    {% endif %}
+  </div>
+  
+  <h2>🎙️ Hangalapú poszt létrehozása</h2>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" name="audio" accept="audio/*">
+  <button type="submit">Feltöltés</button>
+</form>
+
+{% endfor %}
+<p><strong>Hold nakshatra:</strong> {{ poszt.hold_nakshatra }}</p>

@@ -1,5 +1,5 @@
 import json
-from astrocore.models import FelhasznaloHoroszkop
+from sonicjyotish.models import FelhasznaloHoroszkop
 
 # Adatok betöltése JSON fájlból
 def load_data():

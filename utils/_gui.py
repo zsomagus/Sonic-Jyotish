@@ -1,12 +1,13 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
-from data import save_data, load_data, set_entry, update_fields
+from _data import save_data, load_data, set_entry, update_fields
 import json
 import astro_chart
 import _location_utils
 from _config import varga_factors
-import _coordinates
 import _config 
+import audio_kotta_tools
+import _time_utils
 # Főablak létrehozása
 root = tk.Tk()
 root.title("Hindu-Védikus asztrológiai Hang Elemző program-- Kozmikus önvalónk templomának hangzásviléga.")
