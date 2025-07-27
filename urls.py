@@ -22,7 +22,7 @@ path('', include('asztroapp.urls')),
 
 
 urlpatterns = [
-    path("", views.eloregisztracio_view, name="eloregisztracio"),
+    path("eloregisztracio/", views.eloregisztracio_view, name="eloregisztracio"),
     path("regisztracio/", views.regisztracio_view, name="regisztracio_view"),
 ]
 
