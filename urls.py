@@ -1,13 +1,16 @@
-from django.urls import path
 from .views import index_view
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
-from django.urls import path
 from .views import index_view
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+
+urlpatterns = [
+    path('', include('view.urls')),  # vagy ahogy az app neve szerepel
+]
+
 urlpatterns = [
     path('', index_view, name='index'),  # kezdőoldal űrlappal
 ]
