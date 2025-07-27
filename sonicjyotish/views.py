@@ -100,7 +100,7 @@ def eloregisztracio_view(request):
     pontszam = None
     if request.method == 'POST':
         try:
-            pontszam = sum(int(request.POST.get(q, 0)) for q in ['q1', 'q2', 'q3', 'q4'])
+            pontszam = sum(int(request.POST.get(q, 0)) for q in ['q1', 'q2', 'q3', 'q4', 'q5'])
         except ValueError:
             pontszam = 0
         return render(request, 'eloregisztracio.html', {'pontszam': pontszam})

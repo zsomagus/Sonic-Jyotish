@@ -21,11 +21,11 @@ path('', include('asztroapp.urls')),
 
 
 
-
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", views.eloregisztracio_view, name="eloregisztracio"),
     path("regisztracio/", views.regisztracio_view, name="regisztracio_view"),
 ]
+
 
 generate_horoszkop_for_user(user)  # Te írod meg, és hozzárendeli a képet
 
