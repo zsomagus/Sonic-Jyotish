@@ -49,9 +49,9 @@ def szobalista_view(request):
 def index_view(request):
     if request.method == "POST":
         # 1️⃣ Ha pontszám-értékeléses POST
-        if all(q in request.POST for q in ['q1', 'q2', 'q3', 'q4']):
+        if all(q in request.POST for q in ['q1', 'q2', 'q3', 'q4', 'q5']):
             try:
-                pontszam = sum(int(request.POST.get(q, 0)) for q in ['q1', 'q2', 'q3', 'q4'])
+                pontszam = sum(int(request.POST.get(q, 0)) for q in ['q1', 'q2', 'q3', 'q4', 'q5'])
             except ValueError:
                 pontszam = 0
             if pontszam >= 10:
