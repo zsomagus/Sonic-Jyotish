@@ -7,6 +7,7 @@ urlpatterns = [
     path('', views.index_view, name='index'),
     path('eloregisztracio/', views.eloregisztracio_view, name='eloregisztracio'),
     path('regisztracio/', views.regisztracio_view, name='regisztracio_view'),
+    path('astro/', views.astro_main_view, name='astro_main'),
     path("profil/szerkesztes/", views.profil_szerkeszto_view, name="profil_szerkesztes"),
     path("kozosseg/", views.kozosseg_list_view, name="kozosseg"),
     path("posztok/", views.posztok_view, name="posztok"),

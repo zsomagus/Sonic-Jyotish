@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>🌟 Horoszkóp Generálás</h2>
+  <p>Üdv a csillagok között! Itt generálhatod a személyes horoszkópodat az adataid alapján.</p>
+<style>
+  .utmutato-box {
+    display: none;
+    background-color: #f5f5f5;
+    padding: 1em;
+    border-left: 4px solid #888;
+    margin-top: 1em;
+    font-size: 0.95em;
+    line-height: 1.5;
+  }
+  .toggle-btn {
+    cursor: pointer;
+    color: #0077cc;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    font-weight: bold;
+  }
+</style>
+
+<div class="toggle-btn" onclick="toggleUtmutato()">
+  ⬇️ Használati útmutató megjelenítése
+</div>
+
+<div id="utmutato" class="utmutato-box">
+  <div style="text-align: right; margin-bottom: 0.5em;">
+    <span style="cursor: pointer; color: #0066cc;" onclick="toggleLanguage()">🌐 English</span>
+  </div>
+  
+  <div id="utmutato-content">
+    <ol>
+      <li>Írja be a születési adatait, és válasszon részhoroszkópot.</li>
+      <li>Ha megadja a születési helyet, majd a <strong>Kitöltés</strong> gombra kattint, automatikusan kiegészülnek a koordináták.</li>
+      <li>A <strong>Horoszkóp rajzolása</strong> gomb menti a képletet PNG formátumban.</li>
+      <li>A <strong>Lejátszás</strong> gombbal meghallgathatja a horoszkópja dallamait.</li>
+      <li>A <strong>Prashna</strong> gomb az aktuális időpontra vonatkozó képletet tölti ki (alapból Budapest koordinátáival).</li>
+      <li>A <strong>Varshapala</strong> mezőbe beírhatja az életkorát, és így éves horoszkópot kap.</li>
+      <li>Minden képletből készíthet hangot (wav), valamint kottát is (PDF).</li>
+    </ol>
+    <p>🧭 A program célja, hogy könnyedén megérthetővé tegye a horoszkóp üzenetét — akár egy intuitív hangélményen keresztül is.</p>
+  </div>
+</div>
+
+<script>
+  let isEnglish = false;
+  function toggleUtmutato() {
+    const utmutato = document.getElementById('utmutato');
+    utmutato.style.display = utmutato.style.display === 'none' ? 'block' : 'none';
+  }
+  
+  function toggleLanguage() {
+    const content = document.getElementById("utmutato-content");
+    if (!isEnglish) {
+      content.innerHTML = `
+        <ol>
+          <li>Enter your birth details and select a divisional chart.</li>
+          <li>You can auto-fill coordinates by entering the location and clicking <strong>Fill</strong>.</li>
+          <li>Click <strong>Draw Horoscope</strong> to generate a PNG file of your chart.</li>
+          <li>Click <strong>Play</strong> to hear the musical translation of your horoscope.</li>
+          <li>The <strong>Prashna</strong> button fills the fields with the current time and Budapest coordinates by default.</li>
+          <li>For annual chart: enter age and press <strong>Varshapala</strong>.</li>
+          <li>You can export sound as WAV and also create a musical PDF score.</li>
+        </ol>
+        <p>🧭 The program helps reveal your horoscope's message — through sound, rhythm, and cosmic symbolism.</p>
+      `;
+      isEnglish = true;
+    } else {
+      content.innerHTML = `
+        <ol>
+          <li>Írja be a születési adatait, és válasszon részhoroszkópot.</li>
+          <li>Ha megadja a születési helyet, majd a <strong>Kitöltés</strong> gombra kattint, automatikusan kiegészülnek a koordináták.</li>
+          <li>A <strong>Horoszkóp rajzolása</strong> gomb menti a képletet PNG formátumban.</li>
+          <li>A <strong>Lejátszás</strong> gombbal meghallgathatja a horoszkópja dallamait.</li>
+          <li>A <strong>Prashna</strong> gomb az aktuális időpontra vonatkozó képletet tölti ki (alapból Budapest koordinátáival).</li>
+          <li>A <strong>Varshapala</strong> mezőbe beírhatja az életkorát, és így éves horoszkópot kap.</li>
+          <li>Minden képletből készíthet hangot (wav), valamint kottát is (PDF).</li>
+        </ol>
+        <p>🧭 A program célja, hogy könnyedén megérthetővé tegye a horoszkóp üzenetét — akár egy intuitív hangélményen keresztül is.</p>
+      `;
+      isEnglish = false;
+    }
+  }  
+</script>
+
+<h2>🌠 Horoszkóp és Hanggenerálás</h2>
+<form method="post">
+  {% csrf_token %}
+
+  <label>Vezetéknév:
+    <input type="text" name="vezetek_nev" required>
+  </label><br>
+
+  <label>Keresztnév:
+    <input type="text" name="kereszt_nev" required>
+  </label><br>
+
+  <label>Születési dátum:
+    <input type="date" name="datum" required>
+  </label><br>
+
+  <label>Idő (HH:MM:SS):
+    <input type="time" name="ido" required>
+  </label><br>
+
+  <label>Szélességi fok (latitude):
+    <input type="text" name="latitude" required>
+  </label><br>
+
+  <label>Hosszúsági fok (longitude):
+    <input type="text" name="longitude" required>
+  </label><br>
+
+  <label>Helyszín / Város:
+    <input type="text" name="hely">
+  </label><br>
+
+  <label>Időzóna:
+    <select name="ido_zona">
+      <option value="Europe/Budapest" selected>Europe/Budapest</option>
+      <option value="UTC">UTC</option>
+      <option value="Asia/Kolkata">Asia/Kolkata</option>
+      <!-- kiegészíthető más zónákkal -->
+    </select>
+  </label><br>
+
+  <label>Nyári időszámítás:
+    <input type="checkbox" name="nyari_idoszamitas" value="igen">
+  </label><br>
+
+  <label>Részhoroszkóp:
+    <select name="varga">
+      {% for varga in vargak %}
+        <option value="{{ varga }}">{{ varga }}</option>
+      {% endfor %}
+    </select>
+  </label><br>
+
+  <button type="submit">Horoszkóp rajzolása</button>
+  <button type="button" onclick="handlePrashna()">🔮 Prashna</button>
+  <input type="number" id="varshapala_eletkor" placeholder="Életkor">
+  <button type="button" onclick="handleVarshapala()">🕰️ Varshapala</button>
+  <input type="text" id="Fill_városnév" placeholder="Városnév">
+  <button type="button" onclick="handleFill()">📍 Kitöltés</button>
+  <button onclick="document.getElementById('hanglejátszo').play()">▶️ Play</button>
+  <button onclick="document.getElementById('hanglejátszo').pause()">⏸️ Stop</button>
+  
+  <audio id="hanglejátszo">
+  <source src="{{ hang_url }}" type="audio/wav">
+</audio>
+<a href="{{ hang_url }}" download>⬇️ Mentés WAV</a>
+
+<iframe src="{{ pdf_url }}" width="100%" height="500px"></iframe>
+<a href="{{ pdf_url }}" download>⬇️ Letöltés PDF</a>
+
+{% if hang_url and pdf_url and kep_url %}
+  <hr>
+  <h3>🔭 Generált eredmények:</h3>
+
+  <h4>🌠 Horoszkópkép:</h4>
+  <img src="{{ kep_url }}" alt="D1 horoszkóp" style="max-width: 500px;">
+  <a href="{{ kep_url }}" download>⬇️ Kép letöltése</a>
+
+  <h4>🎧 Hangfájl:</h4>
+  <audio controls id="hanglejátszo">
+    <source src="{{ hang_url }}" type="audio/wav">
+  </audio>
+  <a href="{{ hang_url }}" download>⬇️ Mentés WAV</a>
+
+  <h4>🎼 Kottázott PDF:</h4>
+  <iframe src="{{ pdf_url }}" width="100%" height="500px"></iframe>
+  <a href="{{ pdf_url }}" download>⬇️ Letöltés PDF</a>
+{% endif %}
+
+{% if poszt.yantra_kep %}
+  <h4>🧘 Tithi Yantra</h4>
+  <img src="{{ poszt.yantra_kep.url }}" style="max-width: 200px;">
+  <p>Tithi száma: {{ poszt.tithi_szam }}</p>
+{% endif %}
+
+{% if poszt.szoveg %}
+  <p><strong>🎙️ Felismert szöveg:</strong> {{ poszt.szoveg }}</p>
+{% endif %}
+
+{% if poszt.ai_valasz %}
+  <p><strong>🤖 AstroAI válasza:</strong><br>{{ poszt.ai_valasz }}</p>
+{% endif %}
+
+</form>
+
+<script>
+  async function handleFill() {
+    const varos = document.querySelector('input[name="hely"]').value;
+    if (!varos) {
+      alert("Kérlek, írj be egy várost.");
+      return;
+    }
+
+    const response = await fetch(`/get-koordinatak/?varos=${encodeURIComponent(varos)}`);
+    if (response.ok) {
+      const data = await response.json();
+      document.querySelector('input[name="latitude"]').value = data.latitude;
+      document.querySelector('input[name="longitude"]').value = data.longitude;
+    } else {
+      alert("Nem találtam ilyen várost az adatbázisban.");
+    }
+  }
+</script>
+
+{% endblock %}
