@@ -9,6 +9,34 @@ from .models import KozossegiSzoba
 from .models import Poszt
 from .models import KozossegiSzoba
 from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+
+@api_view(['POST'])
+def regisztracio_api(request):
+    data = request.data
+    user = User.objects.create_user(
+        username=data['email'],
+        email=data['email'],
+        first_name=data.get('first_name', ''),
+        last_name=data.get('last_name', ''),
+        password=User.objects.make_random_password()
+    )
+    profile = UserProfile.objects.create(
+        user=user,
+        szuletesi_datum=data['szuletesi_datum'],
+        szuletesi_ido=data['szuletesi_ido'],
+        szuletesi_hely=data['szuletesi_hely'],
+        latitude=data['latitude'],
+        longitude=data['longitude'],
+        bemutatkozas=data.get('bemutatkozas', ''),
+        erdeklodes=data.get('erdeklodes', ''),
+        fenykep=None,
+    )
+    # ... horoszkóp generálás, stb.
+    return Response({"success": True, "user_id": user.id})
+
 def home(request):
     return render(request, "home.html")
 

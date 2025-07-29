@@ -8,6 +8,7 @@ from _config import varga_factors
 import _config 
 import audio_kotta_tools
 import _time_utils
+import city_entry
 # Főablak létrehozása
 root = tk.Tk()
 root.title("Hindu-Védikus asztrológiai Hang Elemző program-- Kozmikus önvalónk templomának hangzásviléga.")
