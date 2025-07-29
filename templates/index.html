@@ -147,7 +147,7 @@
   <button onclick="document.getElementById('hanglejátszo').pause()">⏸️ Stop</button>
   
   <audio id="hanglejátszo">
-    <source src="{% static hang_url %}" type="audio/wav">
+	<source src="{{ hang_url }}" type="audio/wav">
   </audio>
   <a href="{% static hang_url %}" download>⬇️ Mentés WAV</a>
   
