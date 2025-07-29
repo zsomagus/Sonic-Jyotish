@@ -13,9 +13,9 @@
     {% if poszt.tithi_szam %}
       <p>🧘 Tithi: <strong>{{ poszt.tithi_szam }}</strong></p>
     {% endif %}
-
+	{% if poszt.szoveg %}
     <p>{{ poszt.szoveg|linebreaks }}</p>
-
+	{% endfor %}
     {% if poszt.kep %}
       <img src="{{ poszt.kep.url }}" style="max-width: 250px;">
     {% endif %}
