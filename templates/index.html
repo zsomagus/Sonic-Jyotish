@@ -147,45 +147,45 @@
   <button onclick="document.getElementById('hanglejátszo').pause()">⏸️ Stop</button>
   
   <audio id="hanglejátszo">
-	<source src="{{ hang_url }}" type="audio/wav">
+  <source src="{{ hang_url }}" type="audio/wav">
+</audio>
+<a href="{{ hang_url }}" download>⬇️ Mentés WAV</a>
+
+<iframe src="{{ pdf_url }}" width="100%" height="500px"></iframe>
+<a href="{{ pdf_url }}" download>⬇️ Letöltés PDF</a>
+
+{% if hang_url and pdf_url and kep_url %}
+  <hr>
+  <h3>🔭 Generált eredmények:</h3>
+
+  <h4>🌠 Horoszkópkép:</h4>
+  <img src="{{ kep_url }}" alt="D1 horoszkóp" style="max-width: 500px;">
+  <a href="{{ kep_url }}" download>⬇️ Kép letöltése</a>
+
+  <h4>🎧 Hangfájl:</h4>
+  <audio controls id="hanglejátszo">
+    <source src="{{ hang_url }}" type="audio/wav">
   </audio>
-  <a href="{% static hang_url %}" download>⬇️ Mentés WAV</a>
-  
-  <iframe src="{% static pdf_url %}" width="100%" height="500px"></iframe>
-  <a href="{% static pdf_url %}" download>⬇️ Letöltés PDF</a>
+  <a href="{{ hang_url }}" download>⬇️ Mentés WAV</a>
 
-  {% if hang_url and pdf_url and kep_url %}
-    <hr>
-    <h3>🔭 Generált eredmények:</h3>
+  <h4>🎼 Kottázott PDF:</h4>
+  <iframe src="{{ pdf_url }}" width="100%" height="500px"></iframe>
+  <a href="{{ pdf_url }}" download>⬇️ Letöltés PDF</a>
+{% endif %}
 
-    <h4>🌠 Horoszkópkép:</h4>
-    <img src="{% static kep_url %}" alt="D1 horoszkóp" style="max-width: 500px;">
-    <a href="{% static kep_url %}" download>⬇️ Kép letöltése</a>
+{% if poszt.yantra_kep %}
+  <h4>🧘 Tithi Yantra</h4>
+  <img src="{{ poszt.yantra_kep.url }}" style="max-width: 200px;">
+  <p>Tithi száma: {{ poszt.tithi_szam }}</p>
+{% endif %}
 
-    <h4>🎧 Hangfájl:</h4>
-    <audio controls id="hanglejátszo">
-      <source src="{% static hang_url %}" type="audio/wav">
-    </audio>
-    <a href="{% static hang_url %}" download>⬇️ Mentés WAV</a>
+{% if poszt.szoveg %}
+  <p><strong>🎙️ Felismert szöveg:</strong> {{ poszt.szoveg }}</p>
+{% endif %}
 
-    <h4>🎼 Kottázott PDF:</h4>
-    <iframe src="{% static pdf_url %}" width="100%" height="500px"></iframe>
-    <a href="{% static pdf_url %}" download>⬇️ Letöltés PDF</a>
-  {% endif %}
-
-  {% if poszt.yantra_kep %}
-    <h4>🧘 Tithi Yantra</h4>
-    <img src="{{ poszt.yantra_kep.url }}" style="max-width: 200px;">
-    <p>Tithi száma: {{ poszt.tithi_szam }}</p>
-  {% endif %}
-
-  {% if poszt.szoveg %}
-    <p><strong>🎙️ Felismert szöveg:</strong> {{ poszt.szoveg }}</p>
-  {% endif %}
-
-  {% if poszt.ai_valasz %}
-    <p><strong>🤖 AstroAI válasza:</strong><br>{{ poszt.ai_valasz }}</p>
-  {% endif %}
+{% if poszt.ai_valasz %}
+  <p><strong>🤖 AstroAI válasza:</strong><br>{{ poszt.ai_valasz }}</p>
+{% endif %}
 
 </form>
 
