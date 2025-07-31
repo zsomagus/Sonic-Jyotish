@@ -93,10 +93,11 @@ def index_view(request):
             })
 
     # 3️⃣ GET-kérés — sima kezdőoldal
-    return render(request, "index.html", 
-    vargak=varga{
+    return render(request, "index.html") 
+    vargak=varga,
+    {
         "vargak": ["D1 (Rashi)", "D2 (Hora)", "D3 (Drekkana)", "D9 (Navamsha)"]
-    })
+    }
 
 def eloregisztracio_view(request):
     pontszam = None
