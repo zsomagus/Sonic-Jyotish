@@ -182,7 +182,7 @@ def index(request):
             int(request.POST.get("q5", 0)),
         ]
         pontszam = sum(válaszok)
-    return render(request, "előregisztráció.html", {"pontszam": pontszam})
+    return render(request, "eloregisztracio.html", {"pontszam": pontszam})
 
 def astro_main_view(request):
-    return render(request, 'astro_main.html')
+    return render(request, 'astro/index.html')
