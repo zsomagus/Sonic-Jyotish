@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
-from .views import eloregisztracio_view
+from .views import eloregisztracio_view, regisztracio_view
 from sonicjyotish import views
 urlpatterns = [
     path('', views.index_view, name='index'),
