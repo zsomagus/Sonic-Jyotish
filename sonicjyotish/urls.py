@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from .views import eloregisztracio_view
-import views
+from sonicjyotish import views
 urlpatterns = [
     path('', views.index_view, name='index'),
     path('eloregisztracio/', views.eloregisztracio_view, name='eloregisztracio'),
