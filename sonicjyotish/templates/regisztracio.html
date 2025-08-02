@@ -1,7 +1,8 @@
 <h2>Regisztráció</h2>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-
+  {{ felhasznalo_form.as_p }}
+  {{ profil_form.as_p }}
   <label for="nev">Teljes név:</label><br>
   {{ form.nev }}<br><br>
 

@@ -109,37 +109,27 @@ def eloregisztracio_view(request):
         return render(request, 'eloregisztracio.html', {'pontszam': pontszam})
     return render(request, 'eloregisztracio.html', {})
 
-
 def regisztracio_view(request):
     if request.method == "POST":
-        form = RegisztraciosForm(request.POST, request.FILES)
-        if form.is_valid():
-            # Először létrehozzuk a User-t
-            user = User.objects.create_user(
-                username=form.cleaned_data['email'],  # vagy máshonnan
-                email=form.cleaned_data['email'],
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name'],
-                password=User.objects.make_random_password()
-            )
-
-            # Majd a UserProfile-t
-            generate_horoszkop_for_user(user)  # Te írod meg, és hozzárendeli a képet
-            profile = UserProfile.objects.create(
-                user=user,
-                szuletesi_datum=form.cleaned_data['szuletesi_datum'],
-                szuletesi_ido=form.cleaned_data['szuletesi_ido'],
-                szuletesi_hely=form.cleaned_data['szuletesi_hely'],
-                bemutatkozas=form.cleaned_data['bemutatkozas'],
-                erdeklodes=form.cleaned_data['erdeklodes'],
-                fenykep=form.cleaned_data['fenykep'],
-            )
-
+        felhasznalo_form = FelhasznaloForm(request.POST)
+        profil_form = ProfilForm(request.POST, request.FILES)
+        if felhasznalo_form.is_valid() and profil_form.is_valid():
+            user = felhasznalo_form.save()  # tartalmazza username, email, jelszó, stb.
+            profile = profil_form.save(commit=False)
+            profile.user = user
+            profile.save()
+            generate_horoszkop_for_user(user)
             login(request, user)
             return redirect('profil')
     else:
-        form = RegisztraciosForm()
-    return render(request, 'regisztracio.html', {'form': form})
+        felhasznalo_form = FelhasznaloForm()
+        profil_form = ProfilForm()
+
+    return render(request, 'regisztracio.html', {
+        'felhasznalo_form': felhasznalo_form,
+        'profil_form': profil_form
+    })
+
 def generate_horoszkop_for_user(user):
     # Példa: hozzárendelünk egy képet a születési dátum alapján
     datum = user.userprofile.szuletesi_datum

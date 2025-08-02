@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from .models import UserProfile
 from .models import KozossegiSzoba
 from .models import Uzenet
-class RegisztraciosForm(forms.ModelForm):
+class FelhasznaloForm(forms.ModelForm):
     # User mezőket is itt definiálod
     first_name = forms.CharField(label="Keresztnév")
     last_name = forms.CharField(label="Vezetéknév")
@@ -25,7 +25,7 @@ class RegisztraciosForm(forms.ModelForm):
             'fenykep',
         ]
 
-class RegisztraciosForm(UserCreationForm):
+class ProfilForm(UserCreationForm):
     email = forms.EmailField(required=True)
     szuletesi_datum = forms.DateField(label="Születési dátum", widget=forms.DateInput(attrs={"type": "date"}))
     bemutatkozas = forms.CharField(widget=forms.Textarea, required=False)
