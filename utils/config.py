@@ -1,148 +1,135 @@
-# 💲 Globális tábla (uralkodó → nakshatra → 4 frekvencia)
-full_pada_table = {
-    "Mars": {
-        "Mrigashira":   [132, 264, 396, 528],
-        "Chittra":      [132, 264, 396, 528],
-        "Dhanista":     [132, 264, 396, 528],
-    },
-    "Venus": {
-        "Bharani":      [159.75, 319.5, 479.25, 639],
-        "Purva Phalguni": [159.75, 319.5, 479.25, 639],
-        "Purva Shada":  [159.75, 319.5, 479.25, 639],
-    },
-    "Mercury": {
-        "Ashlesha":     [185.25, 370.5, 555.75, 741],
-        "Jyeshta":      [185.25, 370.5, 555.75, 741],
-        "Revati":       [185.25, 370.5, 555.75, 741],
-    },
-    "Moon": {
-        "Rohini":       [104.25, 208.5, 312.75, 417],
-        "Hasta":        [104.25, 208.5, 312.75, 417],
-        "Shravana":     [104.25, 208.5, 312.75, 417],
-    },
-    "Sun": {
-        "Krittika":     [240.75, 481.5, 722.25, 963],
-        "Uttara Phalguni": [240.75, 481.5, 722.25, 963],
-        "Uttara Shada": [240.75, 481.5, 722.25, 963],
-    },
-    "Jupiter": {
-        "Punarvasu":    [213, 426, 639, 852],
-        "Vishaka":      [213, 426, 639, 852],
-        "Purva Bhadrapada": [213, 426, 639, 852],
-    },
-    "Saturn": {
-        "Pushya":       [92.25, 184.5, 276.75, 369],
-        "Anuradha":     [92.25, 184.5, 276.75, 369],
-        "Uttara Bhadrapada": [92.25, 184.5, 276.75, 369],
-    },
-    "Rahu": {
-        "Ardra":        [71.25, 142.5, 213.75, 285],
-        "Swati":        [71.25, 142.5, 213.75, 285],
-        "Shatabhisha":  [71.25, 142.5, 213.75, 285],
-    },
-    "Ketu": {
-        "Ashwini":      [43.5, 87, 130.5, 174],
-        "Magha":        [43.5, 87, 130.5, 174],
-        "Mula":         [43.5, 87, 130.5, 174],
-    }
-}
+from pathlib import Path
+import pandas as pd
+import swisseph as swe
+from django.conf import settings
 
-# Jegy -> (Uralkodó bolygó, Frekvencia)
-jegy_uralkodok = {
-    1: ("Mars", 528),
-    2: ("Venus", 639),
-    3: ("Mercury", 741),
-    4: ("Moon", 417),
-    5: ("Sun", 963),
-    6: ("Mercury", 690),
-    7: ("Venus", 583.5),
-    8: ("Mars", 472.5),
-    9: ("Jupiter", 852),
-    10: ("Saturn", 369),
-    11: ("Saturn", 907.5),
-    12: ("Jupiter", 796.5)
-}
-varga_factors = {
-    'D1 (Rashi)': 1,
-    'D2 (Hora)': 15,
-    'D3 (Drekkana)': 10,
-    'D4 (Chaturthamsa)': 7.5,
-    'D5 (Panchamsa)': 6,
-    'D6 (Shashthamsa)': 5,
-    'D7 (Saptamsa)': 4.28,
-    'D8 (Ashtamsa)': 3.75,
-    'D9 (Navamsha)': 3.3333,
-    'D10 (Dasamsa)': 3,
-    'D11 (Rudramsa)': 2.8,
-    'D12 (Dwadasamsa)': 2.5,
-    'D16 (Shodasamsa)': 1.875,
-    'D20 (Vimsamsa)': 1.5,
-    'D24 (Chaturvimsamsa)': 1.25,
-    'D27 (Nakshatramsa)': 1.1,
-    'D30 (Trimsamsa)': 1,
-    'D40 (Khavedamsa)': 0.75,
-    'D45 (Akshavedamsa)': 0.6,
-    'D60 (Shashtyamsa)': 0.5,
-}
-# 📌 Jegy -> (Uralkodó bolygó, Frekvencia, Mantra)
-mantra_map = {
-    1: ("Mars", 528, "ram"),
-    2: ("Venus", 639, "yam"),
-    3: ("Mercury", 741, "ham"),
-    4: ("Moon", 417, "vam"),
-    5: ("Sun", 963, "ram"),
-    6: ("Mercury", 690, "ham"),
-    7: ("Venus", 583.5, "yam"),
-    8: ("Mars", 472.5, "ram"),
-    9: ("Jupiter", 852, "om"),
-    10: ("Saturn", 369, "lam"),
-    11: ("Saturn", 907.5, "aum"),
-    12: ("Jupiter", 796.5, "om")
-}
-nakshatras = [
-    'Ashwini', 'Bharani', 'Krittika', 'Rohini', 'Mrigashira', 'Ardra',
-    'Punarvasu', 'Pushya', 'Ashlesha', 'Magha', 'Purva Phalguni', 'Uttara Phalguni',
-    'Hasta', 'Chitra', 'Swati', 'Vishaka', 'Anuradha', 'Jyeshta',
-    'Mula', 'Purva Shada', 'Uttara Shada', 'Shravana', 'Dhanishta',
-    'Shatabishak', 'Purva Bhadrapada', 'Uttara Bhadrapada', 'Revati'
-]
-bolygo_nakshatra_map = {
-    'Mars': ['Mrigashira', 'Chitra', 'Dhanishta'],
-    'Venus': ['Bharani', 'Purva Phalguni', 'Purva Shada'],
-    'Mercury': ['Ashlesha', 'Jyeshta', 'Revati'],
-    'Moon': ['Rohini', 'Hasta', 'Shravana'],
-    'Sun': ['Krittika', 'Uttara Phalguni', 'Uttara Shada'],
-    'Jupiter': ['Punarvasu', 'Vishaka', 'Purva Bhadrapada'],
-    'Saturn': ['Pushya', 'Anuradha', 'Uttara Bhadrapada'],
-    'Rahu': ['Ardra', 'Swati', 'Shatabishaka'],
-    'Ketu': ['Ashwini', 'Magha', 'Mula']
-}
- # Horoszkóp számítása
-    ayanamsa = swe.get_ayanamsa_ut(best_jd)
-    planet_ids = {
-        'Sun': swe.SUN, 'Moon': swe.MOON, 'Mars': swe.MARS, 'Mercury': swe.MERCURY,
-        'Jupiter': swe.JUPITER, 'Venus': swe.VENUS, 'Saturn': swe.SATURN,
-        'Rahu': swe.MEAN_NODE, 'Ketu': swe.TRUE_NODE
-    }
+# modulok/config.py
 
- # Rövidítések létrehozása
-    planet_abbreviations = {
-        'Sun': 'Su', 'Moon': 'Mo', 'Mars': 'Ma', 'Mercury': 'Me',
-        'Jupiter': 'Ju', 'Venus': 'Ve', 'Saturn': 'Sa',
-        'Rahu': 'Ra', 'Ketu': 'Ke', 'ASC': 'As'
-    }
-       # Házpozíciók (dél-indiai rendszer, 1-től 12-ig)
-    house_positions = {
-    1: (1, 3),   # Kos
-    2: (2, 3),   # Bika
-    3: (3, 3),   # Ikrek
-    4: (3, 2),   # Rák
-    5: (3, 1),   # Oroszlán
-    6: (3, 0),   # Szűz
-    7: (2, 0),   # Mérleg
-    8: (1, 0),   # Skorpió
-    9: (0, 0),   # Nyilas
-    10: (0, 1),  # Bak
-    11: (0, 2),  # Vízöntő
-    12: (0, 3)   # Halak
-}
+def get_config():
+    config = {
+        "graha_tranzit": load_graha(),
+        "nakshatra_map": load_nakshatra_map(),
+        "house_position": load_house(),
+        "jegy_uralkodok": load_uralkodok(),
+        "kulcsszo_valaszok": load_kulcsszo(),
+        "mantra_map": load_mantra_map(),
+        "nakshatra_frekvencia": load_frekvencia(),
+        "mentett_adatok": load_json_file(),
+        "hang_adatok": load_hang(),
+        "asztrológiai_adatbázis": load_adatbazis(),
+        "bolygo_nakshatra_map": load_nakshatra_map(),
+        "nakshatra_info": load_info(),
+        "nakshatras": load_nakshatras(),
+        "planet_abbreviations": load_planet_abbrev(),
+        "planet_ids": load_planet_ids(),
+        "tithi_ajánlások": load_tithi(),
+        "varga_factors": load_varga(),
+        "purusharta_map": load_purusharta(),
+        "file1": load_koord1(),
+        "file2": load_koord2(),
+        
+      #   🎵 Hangminták
+        "json_path": BASE_DIR / "static" / "mentett_adatok.json",
+        "mantra_dir": BASE_DIR / "static" / "mantrák",
+        "ambiance_path": BASE_DIR / "static" / "hangok" / "ambiance.wav",
+        "harang_path": BASE_DIR / "static" / "hangok" / "templom harang.wav",
+        "galboro_path": BASE_DIR / "static" / "hangok" / "galboro.wav",
+        "zaj_path": BASE_DIR / "static" / "hangok" / "zaj.wav",
+    
+        "YANTRA_PATH": BASE_DIR / "static" / "yantra"
+
+            }
+    hang_df = load_hang()
+    config["hang_adatok"] = hang_df  # lehet üres, ha nincs fájl
+
+    return config
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+static_dir = settings.BASE_DIR / "static"
+
+# 📁 Általános fájlok
+def get_pdf_path(filename):
+    return BASE_DIR / "static" / filename
+
+YANTRA_PATH = BASE_DIR / "static" / "yantra"
+swe.set_ephe_path(str(BASE_DIR / "static" / "ephe"))
+
+# 📄 JSON fájl
+def load_json_file():
+    return BASE_DIR / "static" / "mentett_adatok.json"
+
+# 📊 Excel adatfájlok
+from pathlib import Path
+import pandas as pd
+
+def load_hang():
+    path = BASE_DIR / "static" / "hang_adatok.xlsx"
+    if path.exists():
+        print("🔊 Hang adatok betöltve.")
+        return pd.read_excel(path)
+    else:
+        print("⚠️ Nincs hang_adatok.xlsx fájl. Üres adatokat adok vissza.")
+        return pd.DataFrame(columns=["jegy", "Bolygó", "Ház", "Nakshatra", "Nakshatra ura", "Pada", "frekvencia"])
+
+def load_adatbazis():
+    return pd.read_excel(BASE_DIR / "static" / "asztrológiai_adatbázis.xlsx")
+
+def load_nakshatra_map():
+    return pd.read_excel(BASE_DIR / "static" / "bolygo_nakshatra_map.xlsx")
+
+def load_graha():
+    return pd.read_excel(BASE_DIR / "static" / "graha_tranzit.xlsx")
+
+def load_house():
+    return pd.read_excel(BASE_DIR / "static" / "house_position.xlsx")
+
+def load_uralkodok():
+    return pd.read_excel(BASE_DIR / "static" / "jegy_uralkodok.xlsx")
+
+def load_kulcsszo():
+    return pd.read_excel(BASE_DIR / "static" / "kulcsszo_valaszok.xlsx")
+
+def load_mantra_map():
+    return pd.read_excel(BASE_DIR / "static" / "mantra_map.xlsx")
+
+def load_frekvencia():
+    return pd.read_excel(BASE_DIR / "static" / "nakshatra_frekvencia.xlsx")
+
+def load_info():
+    return pd.read_excel(BASE_DIR / "static" / "nakshatra_info.xlsx")
+
+def load_nakshatras():
+    return pd.read_excel(BASE_DIR / "static" / "nakshatras.xlsx")
+
+def load_planet_abbrev():
+    return pd.read_excel(BASE_DIR / "static" / "planet_abbreviations.xlsx")
+
+def load_planet_ids():
+    return pd.read_excel(BASE_DIR / "static" / "planet_ids.xlsx")
+
+def load_tithi():
+    return pd.read_excel(BASE_DIR / "static" / "tithi_ajánlások.xlsx")
+
+def load_varga():
+    return pd.read_excel(BASE_DIR / "static" / "varga_factors.xlsx")
+
+def load_purusharta():
+    return pd.read_excel(BASE_DIR / "static" / "purusharta_map.xlsx")
+
+# 🌍 Koordináta fájlok
+def load_koord1():
+    return pd.read_excel(BASE_DIR / "static" / "file1.xlsx")
+
+def load_koord2():
+    return pd.read_excel(BASE_DIR / "static" / "file2.xlsx")
+
+# 🔒 Globális név-változók
+aktualis_vezeteknev = ""
+aktualis_keresztnev = ""
+
+# 🎵 Hangminták
+mantra_dir = BASE_DIR / "static" / "mantrák"
+ambiance_path = BASE_DIR / "static" / "hangok" / "ambiance.wav"
+harang_path = BASE_DIR / "static" / "hangok" / "templom harang.wav"
+galboro_path = BASE_DIR / "static" / "hangok" / "galboro.wav"
+zaj_path = BASE_DIR / "static" / "hangok" / "zaj.wav"

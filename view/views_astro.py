@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Elemzes
-from location_utils import get_coordinates  # ha használod a városkeresőt
+from utils import sj
 from django.http import JsonResponse
 from .models import TelepulesKoordinata
 from django.shortcuts import render, redirect
@@ -8,7 +8,6 @@ from .forms import RegisztraciosForm
 from .models import UserProfile
 from django.contrib.auth import login
 import views_kozosseg
-import audio_kotta_tools
 import postgresql
 
 def index_view(request):

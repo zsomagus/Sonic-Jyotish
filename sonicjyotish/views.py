@@ -1,13 +1,13 @@
-from .models import Elemzes, UserProfile
-from utils.location_utils import get_coordinates  # ha használod a városkeresőt
+from sonicjyotish.models import Elemzes, UserProfile
+from utils import sj
 from django.shortcuts import render, redirect
-from .forms import RegisztraciosForm
+from sonicjyotish.forms import RegisztraciosForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.shortcuts import render
-from .models import KozossegiSzoba
-from .models import Poszt
-from .models import KozossegiSzoba
+from sonicjyotish.models import KozossegiSzoba
+from sonicjyotish.models import Poszt
+from sonicjyotish.models import KozossegiSzoba
 from django.contrib.auth.decorators import login_required
 
 def home(request):
@@ -129,14 +129,15 @@ def regisztracio_view(request):
         'felhasznalo_form': felhasznalo_form,
         'profil_form': profil_form
     })
-
 def generate_horoszkop_for_user(user):
-    # Példa: hozzárendelünk egy képet a születési dátum alapján
-    datum = user.userprofile.szuletesi_datum
-    if datum.month == 3 and datum.day >= 21 or datum.month == 4 and datum.day <= 19:
-        user.userprofile.horoszkop_kep = "profil_kepek/kos.png"
-    # ... további csillagjegyek
-    user.userprofile.save()
+    profil = Profil.objects.get(user=user)
+    # itt jönne a számítás a születési adatok alapján
+    # pl. horoszkóp generálás, kép mentése
+
+    image_path = create_chart_image(profil.születési_dátum, profil.születési_idő, profil.szélesség, profil.hosszúság)
+    profil.horoszkop_kep = image_path  # ez lehet ImageField vagy fájlútvonal
+    profil.save()
+
 def profil_szerkeszto_view(request):
     # Példa: profil szerkesztő oldal megjelenítése
     return render(request, "profil_szerkesztes.html")
@@ -176,3 +177,20 @@ def index(request):
 
 def astro_main_view(request):
     return render(request, 'astro/index.html')
+if not request.session.get('belepve'):
+    return redirect('belepteto_view')
+
+
+def belepteto_view(request):
+    pontszam = None
+    if request.method == 'POST':
+        try:
+            pontszam = sum(int(request.POST.get(q, 0)) for q in ['q1', 'q2', 'q3', 'q4'])
+        except ValueError:
+            pontszam = 0
+        if pontszam >= 10:
+            request.session['belepve'] = True  # vagy mentheted a user profilba
+            return redirect('regisztracio_view')
+        else:
+            return render(request, 'belepteto.html', {'pontszam': pontszam, 'hiba': "Még nem ébredtél..."})
+    return render(request, 'belepteto.html')

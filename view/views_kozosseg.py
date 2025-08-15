@@ -1,17 +1,17 @@
 from django.contrib.auth.decorators import login_required
-from .forms import ProfilSzerkesztoForm
+from sonicjyotish.forms import ProfilSzerkesztoForm
 from django.db.models import Q
-from .models import UserProfile
-from ._astro_utils import get_nakshatra_for_now, generate_yantra
-from .forms import PosztForm
-from .models import Poszt
-from .astro_utils import get_current_moon_nakshatra
-from .astro_utils import get_current_tithi
+from sonicjyotish.models import UserProfile
+from utils.sj import get_nakshatra_for_now, generate_yantra
+from sonicjyotish.forms import PosztForm
+from sonicjyotish.models import Poszt
+from utils.sj import get_current_moon_nakshatra
+from utils.sj import get_current_tithi
 from datetime import datetime
-from .forms import UzenetForm
-from .models import Uzenet
+from sonicjyotish.forms import UzenetForm
+from sonicjyotish.models import Uzenet
 import views_astro
-import audio_kotta_tools
+import sj
 import postgresql
 import belepteto_views
 def regisztracio_view(request):

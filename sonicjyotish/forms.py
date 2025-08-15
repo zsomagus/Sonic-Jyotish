@@ -1,13 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import UserProfile
-from .models import Poszt
+from sonicjyotish.models import UserProfile
+from sonicjyotish.models import Poszt
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile
-from .models import KozossegiSzoba
-from .models import Uzenet
+from sonicjyotish.models import UserProfile
+from sonicjyotish.models import KozossegiSzoba
+from sonicjyotish.models import Uzenet
 class FelhasznaloForm(forms.ModelForm):
     # User mezőket is itt definiálod
     first_name = forms.CharField(label="Keresztnév")
@@ -25,7 +25,16 @@ class FelhasznaloForm(forms.ModelForm):
             'fenykep',
         ]
 
-class ProfilForm(UserCreationForm):
+class ProfilForm(User# sonicjyotish/forms.py
+
+
+class RegisztraciosForm(forms.Form):
+    nev = forms.CharField(label="Név", max_length=100)
+    email = forms.EmailField(label="Email")
+    születési_dátum = forms.DateField(label="Születési dátum", widget=forms.DateInput(attrs={"type": "date"}))
+    jegy = forms.CharField(label="Asztrológiai jegy", max_length=50)
+    megjegyzés = forms.CharField(label="Megjegyzés", required=False, widget=forms.Textarea)
+CreationForm):
     email = forms.EmailField(required=True)
     szuletesi_datum = forms.DateField(label="Születési dátum", widget=forms.DateInput(attrs={"type": "date"}))
     bemutatkozas = forms.CharField(widget=forms.Textarea, required=False)
