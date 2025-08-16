@@ -1,25 +1,48 @@
 <h2>Regisztráció</h2>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
-  {{ felhasznalo_form.as_p }}
-  {{ profil_form.as_p }}
-  <label for="nev">Teljes név:</label><br>
-  {{ form.nev }}<br><br>
 
-  <label for="szuletesi_datum">Születési dátum:</label><br>
-  {{ form.szuletesi_datum }}<br><br>
+  <fieldset>
+    <legend>Felhasználói adatok</legend>
+    {{ felhasznalo_form.username.label_tag }}<br>
+    {{ felhasznalo_form.username }}<br><br>
 
-  <label for="szuletesi_ido">Születési idő (óra:perc):</label><br>
-  {{ form.szuletesi_ido }}<br><br>
+    {{ felhasznalo_form.email.label_tag }}<br>
+    {{ felhasznalo_form.email }}<br><br>
 
-  <label for="szuletesi_hely">Születési hely:</label><br>
-  {{ form.szuletesi_hely }}<br><br>
+    {{ felhasznalo_form.password1.label_tag }}<br>
+    {{ felhasznalo_form.password1 }}<br><br>
 
-  <label for="bemutatkozas">Rövid bemutatkozás:</label><br>
-  {{ form.bemutatkozas }}<br><br>
+    {{ felhasznalo_form.password2.label_tag }}<br>
+    {{ felhasznalo_form.password2 }}<br><br>
+  </fieldset>
 
-  <label for="fenykep">Fénykép feltöltése:</label><br>
-  {{ form.fenykep }}<br><br>
+  <fieldset>
+    <legend>Születési és profil adatok</legend>
+    {{ profil_form.nev.label_tag }}<br>
+    {{ profil_form.nev }}<br><br>
+
+    {{ profil_form.szuletesi_datum.label_tag }}<br>
+    {{ profil_form.szuletesi_datum }}<br><br>
+
+    {{ profil_form.szuletesi_ido.label_tag }}<br>
+    {{ profil_form.szuletesi_ido }}<br><br>
+
+    {{ profil_form.szuletesi_hely.label_tag }}<br>
+    {{ profil_form.szuletesi_hely }}<br><br>
+
+    {{ profil_form.szelesseg.label_tag }}<br>
+    {{ profil_form.szelesseg }}<br><br>
+
+    {{ profil_form.hosszusag.label_tag }}<br>
+    {{ profil_form.hosszusag }}<br><br>
+
+    {{ profil_form.bemutatkozas.label_tag }}<br>
+    {{ profil_form.bemutatkozas }}<br><br>
+
+    {{ profil_form.fenykep.label_tag }}<br>
+    {{ profil_form.fenykep }}<br><br>
+  </fieldset>
 
   <button type="submit">Regisztrálok</button>
 </form>

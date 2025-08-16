@@ -4,12 +4,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
-}
-
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ALLOWED_HOSTS = ['sonic-jyotish.onrender.com', '127.0.0.1', 'localhost']
 DEBUG = True

@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 from sonicjyotish.models import UserProfile
 from sonicjyotish.models import KozossegiSzoba
 from sonicjyotish.models import Uzenet
+from .models import Profil
+
 class FelhasznaloForm(forms.ModelForm):
     # User mezőket is itt definiálod
     first_name = forms.CharField(label="Keresztnév")
@@ -25,15 +27,43 @@ class FelhasznaloForm(forms.ModelForm):
             'fenykep',
         ]
 
-class ProfilForm(User# sonicjyotish/forms.py
+class ProfilForm(forms.ModelForm):
+    class Meta:
+        model = Profil
+        fields = [
+            'nev', 'szuletesi_datum', 'szuletesi_ido', 'szuletesi_hely',
+            'szelesseg', 'hosszusag', 'bemutatkozas', 'fenykep'
+        ]
+        widgets = {
+            'szuletesi_datum': forms.DateInput(attrs={'type': 'date'}),
+            'szuletesi_ido': forms.TimeInput(attrs={'type': 'time'}),
+        }
 
+class RegisztracioForm(forms.ModelForm):
+    class Meta:
+        model = Profil
+        fields = ['születési_dátum', 'születési_idő', 'szélesség', 'hosszúság']
+        widgets = {
+            'születési_dátum': forms.DateInput(attrs={'type': 'date'}),
+            'születési_idő': forms.TimeInput(attrs={'type': 'time'}),
+        }
+        
+        from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
-class RegisztraciosForm(forms.Form):
-    nev = forms.CharField(label="Név", max_length=100)
-    email = forms.EmailField(label="Email")
-    születési_dátum = forms.DateField(label="Születési dátum", widget=forms.DateInput(attrs={"type": "date"}))
-    jegy = forms.CharField(label="Asztrológiai jegy", max_length=50)
-    megjegyzés = forms.CharField(label="Megjegyzés", required=False, widget=forms.Textarea)
+class FelhasznaloForm(UserCreationForm):
+    email = forms.EmailField(required=True, label="Email címed")
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+        labels = {
+            'username': 'Felhasználónév',
+            'password1': 'Jelszó',
+            'password2': 'Jelszó megerősítése',
+        }
+
 CreationForm):
     email = forms.EmailField(required=True)
     szuletesi_datum = forms.DateField(label="Születési dátum", widget=forms.DateInput(attrs={"type": "date"}))
